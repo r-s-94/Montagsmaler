@@ -5,7 +5,7 @@ let words = [];
 let currentWord = "";
 let previousWord = [];
 
-fetch("word.text")
+fetch("word.txt")
   .then(function (response) {
     return response.text();
   })
@@ -22,8 +22,8 @@ function onClick() {
   wordEL.innerHTML = currentWord;
 }
 
-function getRandomNumber(maxNumber) {
-  return Math.floor(Math.random() * maxNumber);
+function getRandomNumber(minNumber) {
+  return Math.floor(Math.random() * minNumber);
 }
 
 function getRandomWord() {
