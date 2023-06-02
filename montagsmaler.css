@@ -216,3 +216,28 @@ body {
   justify-content: center;
   align-items: center;
 }
+
+.words-out-countainer {
+  margin-top: 50px;
+  margin-left: ;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.true-word {
+  margin-left: 50px;
+}
+
+.true-word-list {
+  margin-top: ;
+  margin-left: -25px;
+}
+
+.false.word {
+  margin-right: 50px;
+}
+
+.false-word-list {
+  margin-top: ;
+  margin-right: 50px;
+}
