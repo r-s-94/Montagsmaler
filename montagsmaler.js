@@ -27,6 +27,7 @@ function changeToFeatureDivOne() {
   document.getElementsByClassName("feature-div")[0].style.display = "none";
   document.getElementsByClassName("feature-div1")[0].style.display = "block";
   timeStart();
+  resetWords();
 }
 
 function changeToFeatureDiv() {
@@ -40,14 +41,18 @@ function changeToFeatureDiv() {
 
 //  first-feature-div
 const oldWordsEL = document.querySelector(".old-words");
-
+const roundTime = 1000 * 15;
 let words = [];
 let currentWord = "";
-let previousWord = [];
+let trueWords = [];
+let falseWords = [];
+let currentStorage = [];
 let guess = 0;
 let currentTime = new Date();
-let timeDifference = 2100 * 10;
+let timeDifference = roundTime;
 let timeControle;
+let text = "";
+let text2 = "";
 
 fetch("word.txt")
   .then(function (response) {
@@ -57,11 +62,23 @@ fetch("word.txt")
     words = text.split(",");
   });
 
-function zählerHoch() {
+function rightWords() {
   guess++;
   if (currentWord) {
-    previousWord.push(currentWord);
-    oldWordsEL.innerHTML = previousWord.join(", ");
+    trueWords.push(currentWord);
+    currentStorage.push(currentWord);
+    oldWordsEL.innerHTML = currentStorage.join(", ");
+  }
+  currentWord = getRandomWord();
+  wordEL.innerHTML = currentWord;
+}
+
+function notRightWords() {
+  guess++;
+  if (currentWord) {
+    falseWords.push(currentWord);
+    currentStorage.push(currentWord);
+    oldWordsEL.innerHTML = currentStorage.join(", ");
   }
   currentWord = getRandomWord();
   wordEL.innerHTML = currentWord;
@@ -76,6 +93,7 @@ function getRandomWord() {
 }
 
 function timeStart() {
+  timeDifference = roundTime;
   timeControle = setInterval(timeCalculation, 100);
 }
 
@@ -100,9 +118,22 @@ function timeCalculation() {
       "block";
     timeStop();
     document.getElementsByClassName("scoreOut")[0].innerHTML = guess;
+    for (let i = 0; i < trueWords.length; i++) {
+      text += trueWords[i] + "<br>";
+    }
+    for (let i = 0; i < falseWords.length; i++) {
+      text2 += falseWords[i] + "<br>";
+    }
+    document.getElementsByClassName("true-word-list")[0].innerHTML = text;
+    document.getElementsByClassName("false-word-list")[0].innerHTML = text2;
   }
 }
 
 function timeStop() {
   clearInterval(timeControle);
+}
+
+function resetWords() {
+  trueWords.pop(0, "");
+  falseWords.pop(0, "");
 }
